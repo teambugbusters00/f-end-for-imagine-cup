@@ -1,5 +1,4 @@
 import ClassOverview from "./ClassOverview";
-import React from "react";
 
 interface PageProps {
   params: {

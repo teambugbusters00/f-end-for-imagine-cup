@@ -1,5 +1,9 @@
 "use client";
 
+interface Props {
+  classId: string;
+}
+
 import ClassChart from "./ClassChart";
 import { ShieldAlert, ShieldCheck, AlertTriangle, MicOff, Activity } from "lucide-react";
 

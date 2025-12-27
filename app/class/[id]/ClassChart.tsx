@@ -10,21 +10,48 @@ import {
   Legend,
 } from "recharts";
 
+/* ---------- Types ---------- */
+
+type StudentChartData = {
+  name: string;
+  Silent: number;
+  Hesitant: number;
+  Active: number;
+};
+
+type WeeklyAttendanceData = {
+  day: string;
+  present: number;
+};
+
 interface ClassChartProps {
-  data: { name: string; Silent: number; Hesitant: number; Active: number }[];
+  data: StudentChartData[] | WeeklyAttendanceData[];
+  type?: "student" | "weekly"; // default = student
 }
 
-export default function ClassChart({ data }: ClassChartProps) {
+/* ---------- Component ---------- */
+
+export default function ClassChart({
+  data,
+  type = "student",
+}: ClassChartProps) {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart data={data}>
-        <XAxis dataKey="name" />
-        <YAxis />
+        <XAxis dataKey={type === "student" ? "name" : "day"} />
+        <YAxis allowDecimals={false} />
         <Tooltip />
         <Legend />
-        <Bar dataKey="Silent" />
-        <Bar dataKey="Hesitant" />
-        <Bar dataKey="Active" />
+
+        {type === "student" ? (
+          <>
+            <Bar dataKey="Silent" fill="#000000" />
+            <Bar dataKey="Hesitant" fill="#000000" />
+            <Bar dataKey="Active" fill="#000000" />
+          </>
+        ) : (
+          <Bar dataKey="present" fill="#000000" />
+        )}
       </BarChart>
     </ResponsiveContainer>
   );

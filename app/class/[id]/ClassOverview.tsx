@@ -5,7 +5,7 @@ interface Props {
 }
 
 import ClassChart from "./ClassChart";
-import { ShieldAlert, ShieldCheck, AlertTriangle, MicOff, Activity } from "lucide-react";
+import { ShieldAlert, ShieldCheck, AlertTriangle, MicOff, Activity, Users, TrendingUp, Brain, } from "lucide-react";
 
 interface Student {
   name: string;
@@ -58,11 +58,58 @@ export default function ClassOverview({ classId }: ClassOverviewProps) {
   };
 
   return (
-    <div className="min-h-screen p-6 bg-gray-50">
+    <div className="min-h-screen p-6 bg-blue-50">
       <h1 className="text-2xl font-bold mb-4">Class: BCA Sem-1 – Programming Fundamentals</h1>
 
+      {/*Today Activity */}
+      <section className="flex flex-col md:flex-row justify-between gap-5">
+        <div className="mb-6 bg-white p-5 rounded-xl w-full flex flex-row justify-between items-center">
+          <span>
+            <h2 className="font-semibold mb-2">TODAY'S ATTENDANCE</h2>
+            <h1 className="font-bold text-3xl">0</h1>
+          </span>
+          <Users className="font-bold w-10 h-10" />
+        </div>
+
+        <div className="mb-6 bg-white p-5 rounded-xl w-full flex flex-row justify-between items-center">
+          <span>
+            <h2 className="font-semibold mb-2">AVG. ENGAGEMENT</h2>
+            <h1 className="font-bold text-3xl">0%</h1>
+          </span>
+          <TrendingUp className="font-bold w-10 h-10" />
+        </div>
+
+        <div className="mb-6 bg-white p-5 rounded-xl w-full flex flex-row justify-between items-center">
+          <span>
+            <h2 className="font-semibold mb-2">AI ACCURACY</h2>
+            <h1 className="font-bold text-3xl">97.8%</h1>
+          </span>
+          <Brain className="font-bold w-10 h-10" />
+        </div>
+      </section>
+
+      {/* Attendance Trend (7 Days) */}
+      <section className="bg-white p-5 rounded-xl">
+        <h2 className="font-semibold mb-2">WEEKLY ATTENDANCE TREND</h2>
+        <div className="h-64">
+          <ClassChart
+          type="weekly"
+            data={[
+              { day: "Mon", present: 30 },
+              { day: "Tue", present: 2 },
+              { day: "Wed", present: 20 },
+              { day: "Thu", present: 14 },
+              { day: "Fri", present: 26 },
+              { day: "Sat", present: 0 },
+              { day: "Sun", present: 0 },
+            ]}
+          />
+
+        </div>
+      </section>
+
       {/* Student Activity */}
-      <section className="mb-6">
+      <section className="mb-6 bg-white p-5 rounded-xl">
         <h2 className="font-semibold mb-2">STUDENT ACTIVITY</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-left border border-gray-200 rounded-lg">
@@ -85,9 +132,8 @@ export default function ClassOverview({ classId }: ClassOverviewProps) {
                       {Array.from({ length: 5 }).map((_, i) => (
                         <div
                           key={i}
-                          className={`h-2 flex-1 rounded ${
-                            i < student.participation ? "bg-black" : "bg-gray-300"
-                          }`}
+                          className={`h-2 flex-1 rounded ${i < student.participation ? "bg-black" : "bg-gray-300"
+                            }`}
                         ></div>
                       ))}
                     </div>
@@ -100,7 +146,7 @@ export default function ClassOverview({ classId }: ClassOverviewProps) {
       </section>
 
       {/* Topic Timeline */}
-      <section>
+      <section className="bg-white p-5 rounded-xl">
         <h2 className="font-semibold mb-2">TOPIC TIMELINE</h2>
         <div className="space-y-2">
           {topics.map((topic, idx) => (
@@ -115,8 +161,8 @@ export default function ClassOverview({ classId }: ClassOverviewProps) {
       </section>
 
       {/* Chart */}
-      <section className="mt-6">
-        <h2 className="font-semibold mb-2">Participation Chart</h2>
+      <section className="mt-6 bg-white p-5 rounded-xl">
+        <h2 className="font-semibold mb-2">PARTICIPATION CHART</h2>
         <div className="h-64">
           <ClassChart
             data={students.map((s) => ({
